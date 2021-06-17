@@ -34,7 +34,10 @@ namespace Diligent
 
 void SampleBase::ModifyEngineInitInfo(const ModifyEngineInitInfoAttribs& Attribs)
 {
-    Attribs.EngineCI.Features = DeviceFeatures{DEVICE_FEATURE_STATE_OPTIONAL};
+    // By default disable all features
+    Attribs.EngineCI.Features = DeviceFeatures{DEVICE_FEATURE_STATE_DISABLED};
+
+    Attribs.EngineCI.Features.SeparablePrograms = DEVICE_FEATURE_STATE_OPTIONAL;
 
     switch (Attribs.DeviceType)
     {
