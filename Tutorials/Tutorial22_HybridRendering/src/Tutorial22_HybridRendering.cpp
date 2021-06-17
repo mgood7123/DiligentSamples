@@ -827,6 +827,15 @@ void Tutorial22_HybridRendering::ModifyEngineInitInfo(const ModifyEngineInitInfo
     Attribs.EngineCI.Features.RayTracing = DEVICE_FEATURE_STATE_ENABLED;
 }
 
+SampleBase::DeviceTypeBits Tutorial22_HybridRendering::GetSupportedRenderDeviceTypes() const
+{
+    DeviceTypeBits Result;
+    Result[RENDER_DEVICE_TYPE_VULKAN] = true;
+    Result[RENDER_DEVICE_TYPE_D3D12]  = true;
+    Result[RENDER_DEVICE_TYPE_METAL]  = true;
+    return Result;
+}
+
 void Tutorial22_HybridRendering::Render()
 {
     // Update constants

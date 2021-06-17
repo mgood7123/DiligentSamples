@@ -78,29 +78,32 @@ INT_PTR CALLBACK SelectDeviceTypeDialogProc(HWND   hwndDlg,
 
         case WM_INITDIALOG:
         {
+            using namespace Diligent;
+            SampleBase::DeviceTypeBits Bits{static_cast<unsigned long>(lParam)};
+
 #if D3D11_SUPPORTED
-            BOOL D3D11Supported = TRUE;
+            BOOL D3D11Supported = Bits[RENDER_DEVICE_TYPE_D3D11];
 #else
             BOOL D3D11Supported  = FALSE;
 #endif
             SetButtonImage(hwndDlg, ID_DIRECT3D11, IDB_DIRECTX11_LOGO, D3D11Supported);
 
 #if D3D12_SUPPORTED
-            BOOL D3D12Supported = TRUE;
+            BOOL D3D12Supported = Bits[RENDER_DEVICE_TYPE_D3D12];
 #else
             BOOL D3D12Supported  = FALSE;
 #endif
             SetButtonImage(hwndDlg, ID_DIRECT3D12, IDB_DIRECTX12_LOGO, D3D12Supported);
 
 #if GL_SUPPORTED
-            BOOL OpenGLSupported = TRUE;
+            BOOL OpenGLSupported = Bits[RENDER_DEVICE_TYPE_GL];
 #else
             BOOL OpenGLSupported = FALSE;
 #endif
             SetButtonImage(hwndDlg, ID_OPENGL, IDB_OPENGL_LOGO, OpenGLSupported);
 
 #if VULKAN_SUPPORTED
-            BOOL VulkanSupported = TRUE;
+            BOOL VulkanSupported = Bits[RENDER_DEVICE_TYPE_VULKAN];
 #else
             BOOL VulkanSupported = FALSE;
 #endif
@@ -278,7 +281,8 @@ protected:
 
     virtual void SelectDeviceType() override final
     {
-        DialogBox(NULL, MAKEINTRESOURCE(IDD_DEVICE_TYPE_SELECTION_DIALOG), NULL, SelectDeviceTypeDialogProc);
+        const auto Bits = m_TheSample->GetSupportedRenderDeviceTypes();
+        DialogBoxParam(NULL, MAKEINTRESOURCE(IDD_DEVICE_TYPE_SELECTION_DIALOG), NULL, SelectDeviceTypeDialogProc, Bits.to_ulong());
         m_DeviceType = g_DeviceType;
     }
 

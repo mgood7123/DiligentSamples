@@ -797,6 +797,14 @@ void Tutorial21_RayTracing::ModifyEngineInitInfo(const ModifyEngineInitInfoAttri
     Attribs.EngineCI.Features.RayTracing = DEVICE_FEATURE_STATE_ENABLED;
 }
 
+SampleBase::DeviceTypeBits Tutorial21_RayTracing::GetSupportedRenderDeviceTypes() const
+{
+    DeviceTypeBits Result;
+    Result[RENDER_DEVICE_TYPE_VULKAN] = true;
+    Result[RENDER_DEVICE_TYPE_D3D12]  = true;
+    return Result;
+}
+
 // Render a frame
 void Tutorial21_RayTracing::Render()
 {

@@ -28,6 +28,7 @@
 #pragma once
 
 #include <vector>
+#include <bitset>
 
 #include "EngineFactory.h"
 #include "RefCntAutoPtr.hpp"
@@ -87,6 +88,13 @@ public:
     void ResetSwapChain(ISwapChain* pNewSwapChain)
     {
         m_pSwapChain = pNewSwapChain;
+    }
+
+    using DeviceTypeBits = std::bitset<RENDER_DEVICE_TYPE_COUNT>;
+    virtual DeviceTypeBits GetSupportedRenderDeviceTypes() const
+    {
+        DeviceTypeBits Result{~0u};
+        return Result;
     }
 
 protected:

@@ -738,7 +738,24 @@ void SampleApp::ProcessCommandLine(const char* CmdLine)
 
     if (m_DeviceType == RENDER_DEVICE_TYPE_UNDEFINED)
     {
-        SelectDeviceType();
+        const auto Bits = m_TheSample->GetSupportedRenderDeviceTypes();
+        if (Bits.count() > 1)
+        {
+            SelectDeviceType();
+        }
+        else
+        {
+            // Only one render device type is supported
+            for (Uint32 t = 0; t < Bits.size(); ++t)
+            {
+                if (Bits[t])
+                {
+                    m_DeviceType = static_cast<RENDER_DEVICE_TYPE>(t);
+                    break;
+                }
+            }
+        }
+
         if (m_DeviceType == RENDER_DEVICE_TYPE_UNDEFINED)
         {
 #if D3D12_SUPPORTED

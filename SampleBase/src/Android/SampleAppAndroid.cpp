@@ -40,7 +40,16 @@ class SampleAppAndroid final : public SampleApp
 public:
     SampleAppAndroid()
     {
-        m_DeviceType = RENDER_DEVICE_TYPE_GLES;
+        const auto Bits = m_TheSample->GetSupportedRenderDeviceTypes();
+
+        if (Bits[RENDER_DEVICE_TYPE_GLES])
+            m_DeviceType = RENDER_DEVICE_TYPE_GLES;
+#if VULKAN_SUPPORTED
+        else if (Bits[RENDER_DEVICE_TYPE_VULKAN])
+            m_DeviceType = RENDER_DEVICE_TYPE_VULKAN;
+#endif
+        else
+            m_DeviceType = RENDER_DEVICE_TYPE_UNDEFINED; // Sample is not supported
     }
 
     virtual void DrawFrame() override final

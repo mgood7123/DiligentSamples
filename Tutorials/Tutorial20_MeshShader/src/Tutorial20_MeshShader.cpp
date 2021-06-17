@@ -337,6 +337,14 @@ void Tutorial20_MeshShader::ModifyEngineInitInfo(const ModifyEngineInitInfoAttri
     Attribs.EngineCI.Features.MeshShaders = DEVICE_FEATURE_STATE_ENABLED;
 }
 
+SampleBase::DeviceTypeBits Tutorial20_MeshShader::GetSupportedRenderDeviceTypes() const
+{
+    DeviceTypeBits Result;
+    Result[RENDER_DEVICE_TYPE_VULKAN] = true;
+    Result[RENDER_DEVICE_TYPE_D3D12]  = true;
+    return Result;
+}
+
 void Tutorial20_MeshShader::Initialize(const SampleInitInfo& InitInfo)
 {
     SampleBase::Initialize(InitInfo);

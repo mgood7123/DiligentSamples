@@ -42,8 +42,9 @@ namespace HLSL
 class Tutorial21_RayTracing final : public SampleBase
 {
 public:
-    virtual void ModifyEngineInitInfo(const ModifyEngineInitInfoAttribs& Attribs) override final;
-    virtual void Initialize(const SampleInitInfo& InitInfo) override final;
+    virtual DeviceTypeBits GetSupportedRenderDeviceTypes() const override final;
+    virtual void           ModifyEngineInitInfo(const ModifyEngineInitInfoAttribs& Attribs) override final;
+    virtual void           Initialize(const SampleInitInfo& InitInfo) override final;
 
     virtual void Render() override final;
     virtual void Update(double CurrTime, double ElapsedTime) override final;
