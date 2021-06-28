@@ -140,6 +140,10 @@ void Tutorial18_Queries::UpdateUI()
             std::stringstream params_ss, values_ss;
             if (m_pPipelineStatsQuery)
             {
+#if PLATFORM_ANDROID
+                params_ss << "Clipping Invocations" << std::endl;
+                values_ss << m_PipelineStatsData.ClippingInvocations << std::endl;
+#else
                 params_ss << "Input vertices" << std::endl
                           << "Input primitives" << std::endl
                           << "VS Invocations" << std::endl
@@ -153,6 +157,7 @@ void Tutorial18_Queries::UpdateUI()
                           << m_PipelineStatsData.ClippingInvocations << std::endl
                           << m_PipelineStatsData.ClippingPrimitives << std::endl
                           << m_PipelineStatsData.PSInvocations << std::endl;
+#endif
             }
 
             if (m_pOcclusionQuery)
